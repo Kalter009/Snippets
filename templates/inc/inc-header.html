@@ -2,7 +2,7 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="{% url 'home' %}">
                 <img src="{% static 'images/logo.png' %}" width="32" height="32" alt="">
                 PythonBin
             </a>
@@ -13,12 +13,20 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="form-inline">
+<<<<<<< HEAD
                         <a class="btn btn-outline-secondary" href="{% url 'add_snippet' %}">
+=======
+                        <a class="btn btn-outline-secondary" href="{% url 'snippets-add'%}">
+>>>>>>> 10d881cfea7757b8123e3dc4ad917e71f9e69438
                             Добавить сниппет
                         </a>
                     </li>
                     <li class="form-inline">
+<<<<<<< HEAD
                         <a class="btn btn-outline-info" href="{% url 'snippets_list' %}">
+=======
+                        <a class="btn btn-outline-info" href="{% url 'snippets-list'%}">
+>>>>>>> 10d881cfea7757b8123e3dc4ad917e71f9e69438
                             Посмотреть сниппеты
                         </a>
                     </li>
