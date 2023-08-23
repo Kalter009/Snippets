@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 from MainApp.models import Snippet
@@ -44,6 +44,13 @@ def snippet_detail(request, snippet_id):
         'snippet': snippet
         }
     return render(request, 'pages/snippet_detail.html', context)
+
+
+def snippet_delete(request, snippet_id):
+    snippet = Snippet.objects.get(id=snippet_id)
+    snippet.delete()
+    # Перенаправление на ту страницу, с которой пришел
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
 # def create_snippet(request):
