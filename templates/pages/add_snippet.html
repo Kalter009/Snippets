@@ -16,11 +16,12 @@
         <div class="col">
             <form action="" method="post">
                 {% csrf_token %}
-                <table>
-                    {{ form }}
-                </table>
-                <button type="submit">Создать</button>
-                                 
+                {{ form.as_p }}
+                <div class="form-group row">
+                    <div class="col-8">
+                        <input type="submit" class="btn btn-primary btn-block" value="Сохранить">
+                    </div>
+                </div>
             </form>
 
         </div>
