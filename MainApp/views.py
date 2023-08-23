@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from MainApp.models import Snippet
 from MainApp.forms import SnippetForm
 
+from django.core.exceptions import ObjectDoesNotExist
+
 
 def index_page(request):
     context = {'pagename': 'PythonBin'}
@@ -38,10 +40,14 @@ def snippets_page(request):
 
 
 def snippet_detail(request, snippet_id):
-    snippet = Snippet.objects.get(id=snippet_id)
+    try:
+        snippet = Snippet.objects.get(id=snippet_id)
+    except ObjectDoesNotExist:
+        raise Http404
     context = {
         'pagename': 'Просмотр сниппета',
-        'snippet': snippet
+        'snippet': snippet,
+        'type': 'view'
         }
     return render(request, 'pages/snippet_detail.html', context)
 
@@ -51,6 +57,32 @@ def snippet_delete(request, snippet_id):
     snippet.delete()
     # Перенаправление на ту страницу, с которой пришел
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+
+def snippet_edit(request, snippet_id):
+    try:
+        snippet = Snippet.objects.get(id=snippet_id)
+    except ObjectDoesNotExist:
+        raise Http404
+    # Хотим получить страницу данных сниппета
+    if request.method == "GET":
+        context = {
+            'pagename': 'Редактирование сниппета',
+            'snippet': snippet,
+            'type': 'edit'
+        }
+        return render(request, 'pages/snippet_detail.html', context)
+    
+    # Хотим создать новый Сниппет(данные от формы)
+    if request.method == "POST":
+        data_form = request.POST
+        snippet.name = data_form["name"]
+        snippet.lang = data_form["lang"]
+        snippet.code = data_form["code"]
+        snippet.creation_date = data_form["creation_date"]
+        snippet.save()
+        return redirect("snippets-list")
+
+
 
 
 # def create_snippet(request):
