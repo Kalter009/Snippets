@@ -14,7 +14,7 @@
 
     <div class="row">
         <div class="col">
-            <form action="" method="post">
+            <form action="{% url 'snippets-add' %}" method="post">
                 {% csrf_token %}
                 <div class="form-group row">
                     <div class="col-sm-8">
@@ -23,22 +23,24 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-8">
+
                         <div class="dropdown">
-                            <button name='lang' value='' class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Язык сниппета
                             </button>
+                            <input type='hidden' name='lang'>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a value='py' class="dropdown-item" href="#">Python</a>
-                                <a class="dropdown-item" href="#">JavaScript</a>
-                                <a class="dropdown-item" href="#">C++</a>
+                                <a class="dropdown-item" data-lang='py' onclick="document.querySelector('[name=lang]').value=this.getAttribute('data-lang')" href="#">Python</a>
+                                <a class="dropdown-item" data-lang='js' onclick="document.querySelector('[name=lang]').value=this.getAttribute('data-lang')" href="#">JavaScript</a>
+                                <a class="dropdown-item" data-lang='cpp' onclick="document.querySelector('[name=lang]').value=this.getAttribute('data-lang')" href="#">C++</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col">
-                        <textarea name='code' cols="96" rows="10" placeholder="Код сниппета"></textarea>
+                        <textarea name='code' cols="75" rows="10" placeholder="Код сниппета"></textarea>
                     </div>
                 </div>
                 <div class="form-group row">

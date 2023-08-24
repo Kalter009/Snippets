@@ -12,6 +12,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
+                    {% if request.user.is_authenticated %}
                     <li class="form-inline">
 <<<<<<< HEAD
                         <a class="btn btn-outline-secondary" href="{% url 'add_snippet' %}">
@@ -21,6 +22,7 @@
                             Добавить сниппет
                         </a>
                     </li>
+                    {% endif %}
                     <li class="form-inline">
 <<<<<<< HEAD
                         <a class="btn btn-outline-info" href="{% url 'snippets_list' %}">
@@ -32,6 +34,35 @@
                     </li>
                 </ul>
             </div>
+            {% if request.user.is_authenticated %}
+            <span style="color: white">Welcome, {{ request.user.username }}</span>
+            <a href="{% url 'logout' %}">logout</a>
+            {% else %}
+            <div class="navbar-nav mr-right nav-item dropdown dropdown-menu-right">
+                <a class="btn btn-outline-primary my-2 my-sm-0 dropdown-toggle" href="#" id="navbarDropdown"
+                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Авторизация</a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <form class="w-100 px-4 py-3" action="{% url 'login'%}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group form-inline">
+                            <input name='username' type="text" class="form-control" placeholder="Username" required>
+                        </div>
+                        <div class="form-group form-inline">
+                            <input name='password' type="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Войти</button>
+                    </form>
+                    <div class="dropdown-divider"></div>
+                </div>
+            </div>
+                {% if errors %}
+                    <ul>
+                    {% for error in errors %}
+                        <li style="color: red">{{ error }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endif %}
         </div>
     </nav>
 </header>
